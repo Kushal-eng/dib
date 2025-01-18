@@ -41,6 +41,17 @@ st.write("## Prediction")
 st.write("Based on the input features, the prediction is:")
 st.write("Diabetes" if prediction[0] == 1 else "No Diabetes")
 st.write(f"Prediction Probability: {prediction_proba[0]*100:.2f}%")
+## Sidebar filters
+age_filter = st.sidebar.slider("Filter by Age Range", 
+                                min_value=int(data["Age"].min()), 
+                                max_value=int(data["Age"].max()), 
+                                value=(30, 50))
+
+glucose_filter = st.sidebar.slider("Filter by Glucose Levels", 
+                                    min_value=int(data["Glucose"].min()), 
+                                    max_value=int(data["Glucose"].max()), 
+                                    value=(120, 140))
+
 # Apply Filters
 filtered_data = data[
     (data["Age"] >= age_filter[0]) & 
@@ -49,8 +60,8 @@ filtered_data = data[
     (data["Glucose"] <= glucose_filter[1])
 ]
 
-if outcome_filter != "All":
-    filtered_data = filtered_data[filtered_data["Outcome"] == outcome_filter]
+st.write("Filtered Data", filtered_data)
+
 
 # Display Filtered Data
 st.write("### Filtered Data")
