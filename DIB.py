@@ -1,13 +1,12 @@
 import streamlit as st
 import pandas as pd
-pip install openpyxl
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 # Load the dataset
 file_path = "diabetes_data.xlsx"
-data = pd.read_excel(file_path)
+data = pd.read_excel(file_path, engine='openpyxl')
 
 # Display the data
 st.title("Diabetes Prediction Dashboard")
