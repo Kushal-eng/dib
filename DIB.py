@@ -41,8 +41,6 @@ st.write("## Prediction")
 st.write("Based on the input features, the prediction is:")
 st.write("Diabetes" if prediction[0] == 1 else "No Diabetes")
 st.write(f"Prediction Probability: {prediction_proba[0]*100:.2f}%")
-st.sidebar.header("Controls")
-
 
 # Model accuracy
 st.write("## Model Accuracy")
