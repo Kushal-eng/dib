@@ -41,6 +41,32 @@ st.write("## Prediction")
 st.write("Based on the input features, the prediction is:")
 st.write("Diabetes" if prediction[0] == 1 else "No Diabetes")
 st.write(f"Prediction Probability: {prediction_proba[0]*100:.2f}%")
+st.sidebar.header("Controls")
+
+# Toggle for Data Overview
+show_data = st.sidebar.checkbox("Show Data Overview", value=True)
+
+# Filters
+age_filter = st.sidebar.slider("Filter by Age", int(data["Age"].min()), int(data["Age"].max()), (20, 50))
+glucose_filter = st.sidebar.slider("Filter by Glucose", int(data["Glucose"].min()), int(data["Glucose"].max()), (100, 150))
+
+# Apply Filters
+filtered_data = data[
+    (data["Age"] >= age_filter[0]) & 
+    (data["Age"] <= age_filter[1]) & 
+    (data["Glucose"] >= glucose_filter[0]) & 
+    (data["Glucose"] <= glucose_filter[1])
+]
+
+# Data Overview
+if show_data:
+    st.write("### Data Overview")
+    st.dataframe(data)
+
+# Filtered Data
+st.write("### Filtered Data")
+st.dataframe(filtered_data)
+
 
 
 # Model accuracy
