@@ -41,8 +41,27 @@ st.write("## Prediction")
 st.write("Based on the input features, the prediction is:")
 st.write("Diabetes" if prediction[0] == 1 else "No Diabetes")
 st.write(f"Prediction Probability: {prediction_proba[0]*100:.2f}%")
-st.write("### Filtered Data Visualization")
-st.bar_chart(filtered_data["BMI"])
+# Apply Filters
+filtered_data = data[
+    (data["Age"] >= age_filter[0]) & 
+    (data["Age"] <= age_filter[1]) & 
+    (data["Glucose"] >= glucose_filter[0]) & 
+    (data["Glucose"] <= glucose_filter[1])
+]
+
+if outcome_filter != "All":
+    filtered_data = filtered_data[filtered_data["Outcome"] == outcome_filter]
+
+# Display Filtered Data
+st.write("### Filtered Data")
+st.write(filtered_data)
+
+# Visualize Filtered Data
+if filtered_data.empty:
+    st.warning("No data matches the selected filters.")
+else:
+    st.write("### Filtered Data Visualization")
+    st.bar_chart(filtered_data["BMI"])
 
 
 # Model accuracy
