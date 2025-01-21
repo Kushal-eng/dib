@@ -9,12 +9,10 @@ from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
 file_path = "diabetes_data.xlsx"
 data = pd.read_excel(file_path)
 
-# Display the data
+# Streamlit App Title
 st.title("Diabetes Prediction Dashboard")
-st.write("## Data Overview")
-st.dataframe(data)
 
-# User input for features
+# User input for Random Forest Classification
 st.sidebar.header("Input Features for Classification")
 age = st.sidebar.slider("Age", int(data["Age"].min()), int(data["Age"].max()), int(data["Age"].mean()))
 bmi = st.sidebar.slider("BMI", float(data["BMI"].min()), float(data["BMI"].max()), float(data["BMI"].mean()))
