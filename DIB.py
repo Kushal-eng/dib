@@ -94,8 +94,8 @@ if regression_features:
     user_inputs_df = pd.DataFrame([user_inputs])
     glucose_prediction = lr_model.predict(user_inputs_df)[0]
     st.write(f"**Predicted Glucose Level:** {glucose_prediction:.2f}")
-import seaborn as sns
-import matplotlib.pyplot as plt
+    import seaborn as sns
+    import matplotlib.pyplot as plt
 
 # Correlation heatmap
 st.write("### Correlation Heatmap")
