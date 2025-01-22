@@ -14,7 +14,11 @@ st.title("Diabetes Prediction Dashboard")
 
 # User input for Random Forest Classification
 st.sidebar.header("Input Features for Classification")
-age = st.sidebar.slider("Age", int(data["Age"].min()), int(data["Age"].max()), int(data["Age"].mean()))
+age =st.sidebar.slider(
+    "Age",
+    min_value=10,  # Start the slider at 10
+    max_value=int(data["Age"].max()),
+    value=int(data["Age"].mean())
 bmi = st.sidebar.slider("BMI", float(data["BMI"].min()), float(data["BMI"].max()), float(data["BMI"].mean()))
 bp = st.sidebar.slider("Blood Pressure", int(data["BloodPressure"].min()), int(data["BloodPressure"].max()), int(data["BloodPressure"].mean()))
 glucose = st.sidebar.slider("Glucose", int(data["Glucose"].min()), int(data["Glucose"].max()), int(data["Glucose"].mean()))
