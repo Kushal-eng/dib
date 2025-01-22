@@ -4,6 +4,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 
 # Load the dataset
 file_path = "diabetes_data.xlsx"
@@ -94,8 +97,6 @@ if regression_features:
     user_inputs_df = pd.DataFrame([user_inputs])
     glucose_prediction = lr_model.predict(user_inputs_df)[0]
     st.write(f"**Predicted Glucose Level:** {glucose_prediction:.2f}")
-    import seaborn as sns
-    import matplotlib.pyplot as plt
 
 # Correlation heatmap
 st.write("### Correlation Heatmap")
