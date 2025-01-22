@@ -94,3 +94,20 @@ if regression_features:
     user_inputs_df = pd.DataFrame([user_inputs])
     glucose_prediction = lr_model.predict(user_inputs_df)[0]
     st.write(f"**Predicted Glucose Level:** {glucose_prediction:.2f}")
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Correlation heatmap
+st.write("### Correlation Heatmap")
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.heatmap(data.corr(), annot=True, cmap="coolwarm", ax=ax)
+st.pyplot(fig)
+
+# Scatterplot for a selected feature
+st.write("### Feature vs Target")
+selected_feature = st.selectbox("Choose Feature", options=X.columns)
+fig, ax = plt.subplots()
+sns.scatterplot(x=data[selected_feature], y=data[target_variable], ax=ax)
+ax.set_title(f"{selected_feature} vs {target_variable}")
+st.pyplot(fig)
+
