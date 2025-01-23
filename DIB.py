@@ -1,4 +1,4 @@
-import streamlit as s
+import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -6,7 +6,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
 
 # Load the dataset
-file_path = "diabetes_data.xls"
+file_path = "diabetes_data.xlsx"
 data = pd.read_excel(file_path)
 
 # Streamlit App Title
