@@ -6,7 +6,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
 
 # Load the dataset
-file_path = "diabetes_data.xlsx"
+file_path = "diabetes_data.xls"
 data = pd.read_excel(file_path)
 
 # Streamlit App Title
