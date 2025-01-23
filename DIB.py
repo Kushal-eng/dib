@@ -14,17 +14,17 @@ st.title("Diabetes Prediction Dashboard")
 
 # User input for Random Forest Classification
 st.sidebar.header("Input Features for Classification")
-age =st.sidebar.slider(
-    "Age",
-    min_value=10,  # Start the slider at 10
-    max_value=int(data["Age"].max()),
-    value=int(data["Age"].mean()))
+age = st.sidebar.slider("Age", min_value=10, max_value=int(data["Age"].max()), value=int(data["Age"].mean()))
 bmi = st.sidebar.slider("BMI", float(data["BMI"].min()), float(data["BMI"].max()), float(data["BMI"].mean()))
 bp = st.sidebar.slider("Blood Pressure", int(data["BloodPressure"].min()), int(data["BloodPressure"].max()), int(data["BloodPressure"].mean()))
 glucose = st.sidebar.slider("Glucose", int(data["Glucose"].min()), int(data["Glucose"].max()), int(data["Glucose"].mean()))
 insulin = st.sidebar.slider("Insulin", int(data["Insulin"].min()), int(data["Insulin"].max()), int(data["Insulin"].mean()))
-dpf = st.sidebar.slider("Diabetes Pedigree Function", float(data["DiabetesPedigreeFunction"].min()), 
-                        float(data["DiabetesPedigreeFunction"].max()), float(data["DiabetesPedigreeFunction"].mean()))
+dpf = st.sidebar.slider(
+    "Diabetes Pedigree Function",
+    float(data["DiabetesPedigreeFunction"].min()),
+    float(data["DiabetesPedigreeFunction"].max()),
+    float(data["DiabetesPedigreeFunction"].mean())
+)
 
 # Splitting data for Random Forest Classification
 X = data.drop("Outcome", axis=1)
@@ -74,7 +74,7 @@ if regression_features:
 
     # Model Evaluation for Regression
     mse = mean_squared_error(y_test_reg, y_pred_reg)
-    r2 = r2_score(y_test_reg, y_pred_reg)
+    r2 = max(0, r2_score(y_test_reg, y_pred_reg))  # Ensure R² is non-negative
 
     # Display Regression Results
     st.write("## Regression Analysis")
