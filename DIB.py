@@ -4,36 +4,27 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score, accuracy_score
-from sklearn.preprocessing import StandardScaler
 
 # Load the dataset
 file_path = "diabetes_data.xlsx"
 data = pd.read_excel(file_path)
-
-# Modify Glucose to create a perfect linear relationship
-data["Glucose"] = 0.5 * data["Age"] + 1.2 * data["BMI"] + 0.8 * data["BloodPressure"]
 
 # Streamlit App Title
 st.title("Diabetes Prediction Dashboard")
 
 # User input for Random Forest Classification
 st.sidebar.header("Input Features for Classification")
-age = st.sidebar.slider(
+age =st.sidebar.slider(
     "Age",
     min_value=10,  # Start the slider at 10
     max_value=int(data["Age"].max()),
-    value=int(data["Age"].mean())
-)
+    value=int(data["Age"].mean()))
 bmi = st.sidebar.slider("BMI", float(data["BMI"].min()), float(data["BMI"].max()), float(data["BMI"].mean()))
 bp = st.sidebar.slider("Blood Pressure", int(data["BloodPressure"].min()), int(data["BloodPressure"].max()), int(data["BloodPressure"].mean()))
 glucose = st.sidebar.slider("Glucose", int(data["Glucose"].min()), int(data["Glucose"].max()), int(data["Glucose"].mean()))
 insulin = st.sidebar.slider("Insulin", int(data["Insulin"].min()), int(data["Insulin"].max()), int(data["Insulin"].mean()))
-dpf = st.sidebar.slider(
-    "Diabetes Pedigree Function",
-    float(data["DiabetesPedigreeFunction"].min()),
-    float(data["DiabetesPedigreeFunction"].max()),
-    float(data["DiabetesPedigreeFunction"].mean())
-)
+dpf = st.sidebar.slider("Diabetes Pedigree Function", float(data["DiabetesPedigreeFunction"].min()), 
+                        float(data["DiabetesPedigreeFunction"].max()), float(data["DiabetesPedigreeFunction"].mean()))
 
 # Splitting data for Random Forest Classification
 X = data.drop("Outcome", axis=1)
@@ -41,7 +32,7 @@ y = data["Outcome"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Model training - Random Forest Classifier
-rf_model = RandomForestClassifier(n_estimators=200, max_depth=10, random_state=42)
+rf_model = RandomForestClassifier(random_state=42)
 rf_model.fit(X_train, y_train)
 
 # Predictions for classification
@@ -72,12 +63,8 @@ if regression_features:
     # Splitting data for Regression
     X_reg = data[regression_features]
     y_reg = data["Glucose"]
-
-    # Standardize the features
-    scaler = StandardScaler()
-    X_reg_scaled = scaler.fit_transform(X_reg)
-    X_train_reg, X_test_reg, y_train_reg, y_test_reg = train_test_split(X_reg_scaled, y_reg, test_size=0.2, random_state=42)
-
+    X_train_reg, X_test_reg, y_train_reg, y_test_reg = train_test_split(X_reg, y_reg, test_size=0.2, random_state=42)
+    
     # Train Linear Regression Model
     lr_model = LinearRegression()
     lr_model.fit(X_train_reg, y_train_reg)
@@ -88,7 +75,6 @@ if regression_features:
     # Model Evaluation for Regression
     mse = mean_squared_error(y_test_reg, y_pred_reg)
     r2 = r2_score(y_test_reg, y_pred_reg)
-    adjusted_r2 = 1 - (1 - r2) * (len(y_test_reg) - 1) / (len(y_test_reg) - len(regression_features) - 1)
 
     # Display Regression Results
     st.write("## Regression Analysis")
@@ -96,7 +82,6 @@ if regression_features:
     st.write(regression_features)
     st.write(f"**Mean Squared Error (MSE):** {mse:.2f}")
     st.write(f"**R² Score:** {r2:.2f}")
-    st.write(f"**Adjusted R² Score:** {adjusted_r2:.2f}")
 
     # User Input for Regression Prediction
     st.write("### Predict Glucose Level")
@@ -111,6 +96,5 @@ if regression_features:
 
     # Make Prediction based on user inputs
     user_inputs_df = pd.DataFrame([user_inputs])
-    user_inputs_scaled = scaler.transform(user_inputs_df)
-    glucose_prediction = lr_model.predict(user_inputs_scaled)[0]
+    glucose_prediction = lr_model.predict(user_inputs_df)[0]
     st.write(f"**Predicted Glucose Level:** {glucose_prediction:.2f}")
